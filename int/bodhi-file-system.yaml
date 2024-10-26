@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bodhi-file-system
+  namespace: apps
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bodhi-file-system
+  template:
+    metadata:
+      labels:
+        app: bodhi-file-system
+    spec:
+      nodeSelector:
+        nodegroup: "int"
+        topology.kubernetes.io/zone: "ap-southeast-1a"
+      containers:
+        - name: bodhi-file-system
+          ports:
+            - name: supplement
+              protocol: TCP
+              containerPort: 9377
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 9377
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 9377
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          image: 476114114107.dkr.ecr.ap-southeast-1.amazonaws.com/bodhi_file_system:0.0.1 # {"$imagepolicy": "flux-system:bodhi-file-system-policy"}
+          env:
+            - name: DATABASE_URL
+              value: "jdbc:postgresql://a18724c4706444438a4ee795db222af7-118215569.ap-southeast-1.elb.amazonaws.com:5432/app"
+            - name: DATABASE_USERNAME
+              value: bodhiint
+            - name: DATABASE_PASSWORD
+              value: bodhiint
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 200Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bodhi-file-system
+  namespace: apps
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 9377
+      targetPort: 9377
+  selector:
+    app: bodhi-file-system
+  
