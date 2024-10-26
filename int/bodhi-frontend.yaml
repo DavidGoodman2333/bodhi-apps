@@ -36,10 +36,12 @@ spec:
               port: 8087
             initialDelaySeconds: 60
             periodSeconds: 10
-          image: 476114114107.dkr.ecr.ap-southeast-1.amazonaws.com/bodhi_frontend:0.0.1 # {"$imagepolicy": "flux-system:bodhi-frontend-policy"}
+          image: 476114114107.dkr.ecr.ap-southeast-1.amazonaws.com/bodhi_frontend:0.0.3 # {"$imagepolicy": "flux-system:bodhi-frontend-policy"}
           env:
-            - name: DATABASE_URL
-              value: "postgres://bodhiint:bodhiint@a18724c4706444438a4ee795db222af7-118215569.ap-southeast-1.elb.amazonaws.com:5432/app?sslmode=disable"
+            - name: VUE_APP_URL_AUTHENTICATION
+              value: http://a2969fb695db944018dc5dbf99f767b6-767196914.ap-southeast-1.elb.amazonaws.com:8082
+            - name: VUE_APP_URL_FILE_SYSTEM
+              value: http://a3d98f973bfef4185bb2f7b8bfdfaa83-495409922.ap-southeast-1.elb.amazonaws.com:9377
           resources:
             requests:
               cpu: 100m
