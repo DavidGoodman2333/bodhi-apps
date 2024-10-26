@@ -28,14 +28,14 @@ spec:
             httpGet:
               path: /
               port: 9377
-            initialDelaySeconds: 10
+            initialDelaySeconds: 30
             periodSeconds: 30
           readinessProbe:
             httpGet:
               path: /
               port: 9377
-            initialDelaySeconds: 5
-            periodSeconds: 10
+            initialDelaySeconds: 30
+            periodSeconds: 30
           image: 476114114107.dkr.ecr.ap-southeast-1.amazonaws.com/bodhi_file_system:0.0.1 # {"$imagepolicy": "flux-system:bodhi-file-system-policy"}
           env:
             - name: DATABASE_URL
