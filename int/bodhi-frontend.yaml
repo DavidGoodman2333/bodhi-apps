@@ -36,7 +36,7 @@ spec:
               port: 8087
             initialDelaySeconds: 5
             periodSeconds: 10
-          image: 476114114107.dkr.ecr.ap-southeast-1.amazonaws.com/bodhi-frontend:0.0.1 # {"$imagepolicy": "flux-system:bodhi-frontend-policy"}
+          image: 476114114107.dkr.ecr.ap-southeast-1.amazonaws.com/bodhi_frontend:0.0.1 # {"$imagepolicy": "flux-system:bodhi-frontend-policy"}
           env:
             - name: DATABASE_URL
               value: "postgres://bodhiint:bodhiint@a18724c4706444438a4ee795db222af7-118215569.ap-southeast-1.elb.amazonaws.com:5432/app?sslmode=disable"
