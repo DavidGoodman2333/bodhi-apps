@@ -36,7 +36,7 @@ spec:
               port: 8087
             initialDelaySeconds: 60
             periodSeconds: 10
-          image: 476114114107.dkr.ecr.ap-southeast-1.amazonaws.com/bodhi_frontend:0.0.4 # {"$imagepolicy": "flux-system:bodhi-frontend-policy"}
+          image: 476114114107.dkr.ecr.ap-southeast-1.amazonaws.com/bodhi_frontend:0.0.5 # {"$imagepolicy": "flux-system:bodhi-frontend-policy"}
           env:
             - name: VUE_APP_URL_AUTHENTICATION
               value: http://a2969fb695db944018dc5dbf99f767b6-767196914.ap-southeast-1.elb.amazonaws.com:8082
