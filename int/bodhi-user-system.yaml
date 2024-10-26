@@ -36,7 +36,7 @@ spec:
               port: 5433
             initialDelaySeconds: 5
             periodSeconds: 10
-          image: 476114114107.dkr.ecr.ap-southeast-1.amazonaws.com/bodhi-user-system:0.0.7
+          image: 476114114107.dkr.ecr.ap-southeast-1.amazonaws.com/bodhi-user-system:0.0.6
           env:
             - name: DATABASE_URL
               value: "postgres://bodhiint:bodhiint@a0b3e412b8bcd4995aa03b0d4ce4c8c8-581959458.ap-southeast-1.elb.amazonaws.com:5432/app?sslmode=disable"
