@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bodhi-frontend
+  namespace: apps
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bodhi-frontend
+  template:
+    metadata:
+      labels:
+        app: bodhi-frontend
+    spec:
+      nodeSelector:
+        nodegroup: "int"
+        topology.kubernetes.io/zone: "ap-southeast-1a"
+      containers:
+        - name: bodhi-frontend
+          ports:
+            - name: supplement
+              protocol: TCP
+              containerPort: 8087
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8087
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8087
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          image: 476114114107.dkr.ecr.ap-southeast-1.amazonaws.com/bodhi-frontend:0.0.1 # {"$imagepolicy": "flux-system:bodhi-frontend-policy"}
+          env:
+            - name: DATABASE_URL
+              value: "postgres://bodhiint:bodhiint@a18724c4706444438a4ee795db222af7-118215569.ap-southeast-1.elb.amazonaws.com:5432/app?sslmode=disable"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 200Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bodhi-frontend
+  namespace: apps
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8087
+      targetPort: 8087
+  selector:
+    app: bodhi-frontend
+  
