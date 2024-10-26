@@ -25,12 +25,6 @@ spec:
               protocol: TCP
               containerPort: 5432
           image: 476114114107.dkr.ecr.ap-southeast-1.amazonaws.com/bodhi-user-system:0.0.3
-          env:
-            - name: KAFKA_SECURITY_PROTOCOL
-              valueFrom:
-                secretKeyRef:
-                  name: data-publisher-kafka-user
-                  key: security_protocol
           resources:
             requests:
               cpu: 100m
